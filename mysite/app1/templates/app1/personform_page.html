@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ personform.as_p }}
+        <input type="submit" value="Press">
+    </form>
+
+    <script>
+        $(document).ready(function(){
+
+            $('#id_job').empty();
+
+            var csStrings = JSON.parse('{{ json_cs_strings | escapejs }}');
+            var bStrings = JSON.parse('{{ json_b_strings | escapejs }}');
+
+            $('#id_subject').on('change', function(){
+
+                var subject = $('#id_subject').val();
+
+                if(subject == 'Computer Science'){
+
+                    $('#id_job').empty();
+
+                    var length = csStrings.length;
+                    var i;
+                    for(i=0; i < length; i++){
+
+                        job = csStrings[i];
+                        $('#id_job').append(
+
+                            `
+                            <option value="${job}">
+                                ${job}
+                            </option>
+                            `
+
+                        );
+
+                    }
+
+                }
+                else if(subject == 'Business'){
+
+                    $('#id_job').empty();
+
+                    var length = bStrings.length;
+                    var i;
+                    for(i=0; i < length; i++){
+
+                        job = bStrings[i];
+                        $('#id_job').append(
+
+                            `
+                            <option value="${job}">
+                                ${job}
+                            </option>
+                            `
+
+                        );
+
+                    }
+
+                }
+                else{
+
+                    $('#id_job').empty();
+
+                }
+
+            });
+
+        });
+    </script>
+
+</body>
+</html>
